@@ -1,0 +1,52 @@
+# project: cj97992sd0zrl0129xeuj4ggd
+# version: 24
+
+type Division @model {
+  id: ID! @isUnique
+  name: String! @isUnique
+  users: [User!]! @relation(name: "UserOnCategory")
+  workouts: [Workout!]! @relation(name: "WorkoutOnCategory")
+}
+
+type File @model {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type PointType @model {
+  id: ID! @isUnique
+  name: String! @isUnique
+  workouts: [Workout!]! @relation(name: "WorkoutOnPointType")
+}
+
+type Role @model {
+  id: ID! @isUnique
+  name: String! @isUnique
+  users: [User!]! @relation(name: "UserOnRole")
+}
+
+type User @model {
+  createdAt: DateTime!
+  division: Division @relation(name: "UserOnCategory")
+  email: String @isUnique
+  firstName: String!
+  id: ID! @isUnique
+  lastName: String!
+  password: String
+  role: Role @relation(name: "UserOnRole")
+  updatedAt: DateTime!
+}
+
+type Workout @model {
+  division: Division @relation(name: "WorkoutOnCategory")
+  id: ID! @isUnique
+  name: String!
+  pointType: PointType @relation(name: "WorkoutOnPointType")
+  steps: [String!]!
+}
